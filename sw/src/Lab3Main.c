@@ -33,6 +33,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include "clockcount.h"
 #include "../inc/ST7735.h"
 #include "../inc/PLL.h"
 #include "../inc/tm4c123gh6pm.h"
@@ -42,13 +43,23 @@
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 void WaitForInterrupt(void);  // low power mode
+
+int hours;
+int minutes; 
+int seconds;
 int main(void){
+	
   DisableInterrupts();
-  PLL_Init(Bus80MHz);    // bus clock at 80 MHz
+  PLL_Init(Bus80MHz);
+	// bus clock at 80 MHz
+	Timer0A_Init(&counter, (uint32_t) 8000000000, 0);
   // write this
   EnableInterrupts();
   while(1){
+		ST7735_DrawBitmap(4, 159, clock, 140, 141);
       // write this
   }
 }
+
+
 
